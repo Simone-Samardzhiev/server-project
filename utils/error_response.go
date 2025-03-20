@@ -37,3 +37,11 @@ func InternalServerError() *ErrorResponse {
 		http.StatusInternalServerError,
 	)
 }
+
+// InvalidJson is the standardized return for invalid json that doesn't match a model.
+func InvalidJson() *ErrorResponse {
+	return NewErrorResponse(
+		"Invalid Json",
+		http.StatusBadRequest,
+	)
+}
