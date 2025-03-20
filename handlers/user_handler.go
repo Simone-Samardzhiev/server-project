@@ -8,10 +8,13 @@ import (
 	"server/utils"
 )
 
+// UserHandler interface will respond to request related to users.
 type UserHandler interface {
+	// Register method will register a user.
 	Register() http.HandlerFunc
 }
 
+// DefaultUserHandler struct is default implementation of [UserHandler].
 type DefaultUserHandler struct {
 	userService services.UserService
 }
@@ -26,7 +29,7 @@ func (h *DefaultUserHandler) Register() http.HandlerFunc {
 			return
 		}
 
-		if returned := utils.CheckPayload(w, &userPayload); !returned {
+		if returned := utils.CheckPayload(w, &userPayload); returned {
 			return
 		}
 
