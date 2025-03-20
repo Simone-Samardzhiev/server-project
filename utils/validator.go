@@ -10,11 +10,11 @@ type ValidatablePayload interface {
 }
 
 // CheckPayload will check the payload and respond with proper error if there is any.
-// Returns true if there was an error and it responded otherwise it returns false.
+// Returns true if there was an error, and it responded otherwise it returns false.
 func CheckPayload(w http.ResponseWriter, payload ValidatablePayload) bool {
 	errorResponse := payload.Validate()
 	if errorResponse != nil {
-		RespondWithError(w, *errorResponse)
+		RespondWithError(w, errorResponse)
 		return true
 	}
 	return false
