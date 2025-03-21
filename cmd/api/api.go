@@ -18,6 +18,7 @@ type App struct {
 func (a *App) start() error {
 	mux := http.NewServeMux()
 	mux.Handle("POST /users/register", a.handlers.UserHandler.Register())
+	mux.Handle("POST /users/login", a.handlers.UserHandler.Login())
 
 	return http.ListenAndServe(a.config.ServerAddr, mux)
 }
