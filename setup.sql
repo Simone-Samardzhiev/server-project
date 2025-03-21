@@ -11,6 +11,7 @@ CREATE TABLE events
     title       VARCHAR(255) NOT NULL,
     date        TIMESTAMP    NOT NULL,
     address     VARCHAR(255) NOT NULL,
+    image_url   VARCHAR(255) NOT NULL,
     description TEXT         NOT NULL
 );
 

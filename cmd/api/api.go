@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"server/auth"
 	"server/config"
 	"server/database"
 	"server/handlers"
@@ -11,8 +12,9 @@ import (
 )
 
 type App struct {
-	config   *config.Config
-	handlers handlers.Handlers
+	config        *config.Config
+	handlers      handlers.Handlers
+	authenticator *auth.JWTAuthenticator
 }
 
 func (a *App) start() error {
@@ -29,13 +31,16 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error connecting to database: %v", err)
 	}
+	authenticator := auth.NewJWTAuthenticator(conf.AuthConfig.JwtSecret, conf.AuthConfig.JwtIssuer)
 
 	app := App{
-		config: conf,
+		config:        conf,
+		authenticator: authenticator,
 		handlers: handlers.Handlers{
 			UserHandler: handlers.NewDefaultUserHandler(
 				services.NewDefaultUserService(
 					repositories.NewDefaultUserRepository(db),
+					authenticator,
 				),
 			),
 		},

@@ -74,8 +74,9 @@ func (s *DefaultUserService) Login(ctx context.Context, user *models.UserPayload
 }
 
 // NewDefaultUserService will create a new [DefaultUserService].
-func NewDefaultUserService(userRepository repositories.UserRepository) *DefaultUserService {
+func NewDefaultUserService(userRepository repositories.UserRepository, authenticator *auth.JWTAuthenticator) *DefaultUserService {
 	return &DefaultUserService{
 		userRepository: userRepository,
+		authenticator:  authenticator,
 	}
 }

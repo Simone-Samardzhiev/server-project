@@ -23,6 +23,16 @@ type Config struct {
 	ServerAddr string
 	// DatabaseConfig is the database configuration.
 	DatabaseConfig DatabaseConfig
+	// AuthConfig is authentication configuration.
+	AuthConfig AuthConfig
+}
+
+// AuthConfig struct holds authentication configuration.
+type AuthConfig struct {
+	// JwtSecret used to sign tokens
+	JwtSecret []byte
+	// JwtIssuer used to set the issuer of the tokens.
+	JwtIssuer string
 }
 
 // NewConfig function will load environment variables and return them as [Config] struct.
@@ -38,6 +48,10 @@ func NewConfig() *Config {
 			Url:                getEnv("DATABASE_URL", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"),
 			MaxOpenConnections: getEnvInt("MAX_OPEN_CONNECTIONS", 10),
 			MaxIdleConnections: getEnvInt("MAX_IDLE_CONNECTIONS", 10),
+		},
+		AuthConfig: AuthConfig{
+			JwtSecret: []byte(getEnv("JWT_SECRET", "secret_for_jwt")),
+			JwtIssuer: getEnv("JWT_ISSUER", "com.localhost"),
 		},
 	}
 }
