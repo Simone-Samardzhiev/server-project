@@ -14,6 +14,9 @@ type UserRepository interface {
 
 	// AddUser will save user information.
 	AddUser(ctx context.Context, user *models.UserPayload) error
+
+	// GetUserByEmail will fetch user by email.
+	GetUserByEmail(ctx context.Context, email string) (*models.User, error)
 }
 
 // DefaultUserRepository struct is default implementation of [UserRepository].
@@ -48,6 +51,23 @@ func (r *DefaultUserRepository) AddUser(ctx context.Context, user *models.UserPa
 	return err
 }
 
+func (r *DefaultUserRepository) GetUserByEmail(ctx context.Context, email string) (*models.User, error) {
+	row := r.db.QueryRowContext(
+		ctx,
+		`SELECT id, email, password FROM users
+         WHERE email = $1`,
+		email,
+	)
+
+	var user models.User
+	err := row.Scan(&user.Id, &user.Email, &user.Password)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
+
+// NewDefaultUserRepository will create a new [DefaultUserRepository].
 func NewDefaultUserRepository(db *sql.DB) *DefaultUserRepository {
 	return &DefaultUserRepository{
 		db: db,
