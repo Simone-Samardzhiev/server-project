@@ -74,3 +74,10 @@ func (u *UserPayload) CheckPassword() *utils.ErrorResponse {
 
 	return nil
 }
+
+// User struct holds used data locally.
+type User struct {
+	Id       int
+	Email    string
+	Password string
+}
