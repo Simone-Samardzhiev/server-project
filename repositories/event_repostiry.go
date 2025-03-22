@@ -47,7 +47,7 @@ func (r *DefaultEventRepository) GetEvents(ctx context.Context) ([]models.Event,
 
 	for rows.Next() {
 		var event models.Event
-		err = rows.Scan(&event.Id, event.Title, &event.Date, &event.Address, &event.ImageURL, &event.Description)
+		err = rows.Scan(&event.Id, &event.Title, &event.Date, &event.Address, &event.ImageURL, &event.Description)
 		if err != nil {
 			return nil, err
 		}
