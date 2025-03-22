@@ -21,6 +21,7 @@ func (a *App) start() error {
 	mux := http.NewServeMux()
 	mux.Handle("POST /users/register", a.handlers.UserHandler.Register())
 	mux.Handle("POST /users/login", a.handlers.UserHandler.Login())
+	mux.Handle("GET /events", a.handlers.EventHandle.GetEvents())
 
 	return http.ListenAndServe(a.config.ServerAddr, mux)
 }
@@ -41,6 +42,11 @@ func main() {
 				services.NewDefaultUserService(
 					repositories.NewDefaultUserRepository(db),
 					authenticator,
+				),
+			),
+			EventHandle: handlers.NewDefaultEventHandler(
+				services.NewDefaultEventService(
+					repositories.NewDefaultEventRepository(db),
 				),
 			),
 		},
