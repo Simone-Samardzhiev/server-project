@@ -26,7 +26,7 @@ func (h *DefaultEventHandler) GetEvents() http.HandlerFunc {
 			return
 		}
 
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusOK)
 		err := json.NewEncoder(w).Encode(events)
 		if err != nil {
