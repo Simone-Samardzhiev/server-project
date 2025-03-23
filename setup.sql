@@ -32,11 +32,11 @@ VALUES ('Доброволческа акция: Почисти природат�
         'https://i.postimg.cc/dtPGkHKz/image3.avif',
         ' Потопи се в света на уличното изкуство! Очакват те графити демонстрации, музика на живо и арт базар с местни творци.');
 
-CREATE TABLE users_events
+CREATE TABLE registrations
 (
     id      SERIAL PRIMARY KEY,
-    userId  INT NOT NULL REFERENCES users (id),
-    eventId INT NOT NULL REFERENCES events (id)
+    user_id  INT NOT NULL REFERENCES users (id),
+    event_id INT NOT NULL REFERENCES events (id)
 );
 
 
