@@ -24,6 +24,7 @@ func (a *App) start() error {
 	mux.Handle("POST /users/login", a.handlers.UserHandler.Login())
 	mux.Handle("GET /events", utils.EnableCors(a.handlers.EventHandle.GetEvents()))
 	mux.Handle("POST /events/register/{id}", a.authenticator.Middleware(a.handlers.EventHandle.RegisterForEvents()))
+	mux.Handle("GET /events/registered", a.authenticator.Middleware(a.handlers.EventHandle.GetRegisteredEvents()))
 
 	return http.ListenAndServe(a.config.ServerAddr, mux)
 }

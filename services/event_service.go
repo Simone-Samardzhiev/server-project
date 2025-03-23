@@ -15,6 +15,9 @@ type EventService interface {
 
 	// RegisterForEvent will register the user for an event.
 	RegisterForEvent(ctx context.Context, userId, eventId int) *utils.ErrorResponse
+
+	// GetRegisteredEvents will return all events wil additional filed if the user has registered for them.
+	GetRegisteredEvents(ctx context.Context, userId int) ([]models.EventWithRegistration, *utils.ErrorResponse)
 }
 
 // DefaultEventService is the default implementation of [EventService].
@@ -54,6 +57,14 @@ func (s *DefaultEventService) RegisterForEvent(ctx context.Context, userId, even
 	}
 
 	return nil
+}
+
+func (s *DefaultEventService) GetRegisteredEvents(ctx context.Context, userId int) ([]models.EventWithRegistration, *utils.ErrorResponse) {
+	events, err := s.eventRepository.GetRegisteredEvents(ctx, userId)
+	if err != nil {
+		return nil, utils.InternalServerError()
+	}
+	return events, nil
 }
 
 // NewDefaultEventService will create new [DefaultEventService].

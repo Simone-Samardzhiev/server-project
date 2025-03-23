@@ -19,6 +19,9 @@ type EventRepository interface {
 
 	// AddRegistration will add a new registration to an event
 	AddRegistration(ctx context.Context, userId, eventId int) error
+
+	// GetRegisteredEvents will return all events wil additional filed if the user has registered for them.
+	GetRegisteredEvents(ctx context.Context, userId int) ([]models.EventWithRegistration, error)
 }
 
 // DefaultEventRepository is the default implementation of [EventRepository].
@@ -103,6 +106,55 @@ func (r *DefaultEventRepository) AddRegistration(ctx context.Context, userId, ev
 	)
 
 	return err
+}
+
+func (r *DefaultEventRepository) GetRegisteredEvents(ctx context.Context, userId int) ([]models.EventWithRegistration, error) {
+	count, err := r.countEvents(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := r.db.QueryContext(
+		ctx,
+		`SELECT 
+				e.id,
+				e.title,
+				e.date,
+				e.address,
+				e.image_url,
+				e.description,
+				CASE 
+					WHEN r.user_id IS NOT NULL THEN TRUE 
+					ELSE FALSE 
+				END AS is_registered
+			FROM events e
+			LEFT JOIN registrations r ON e.id = r.event_id AND r.user_id = $1`,
+		userId,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+	result := make([]models.EventWithRegistration, 0, count)
+	for rows.Next() {
+		var event models.EventWithRegistration
+		err = rows.Scan(
+			&event.Id,
+			&event.Title,
+			&event.Date,
+			&event.Address,
+			&event.ImageURL,
+			&event.Description,
+			&event.IsRegistered,
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		result = append(result, event)
+	}
+
+	return result, nil
 }
 
 // NewDefaultEventRepository will create new [DefaultEventRepository].

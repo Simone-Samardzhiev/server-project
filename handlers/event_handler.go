@@ -17,6 +17,10 @@ type EventHandler interface {
 
 	// RegisterForEvents will register a user for an event.
 	RegisterForEvents() http.HandlerFunc
+
+	// GetRegisteredEvents will return events with additional field if the user
+	// has registered for them.
+	GetRegisteredEvents() http.HandlerFunc
 }
 
 // DefaultEventHandler is default implementation of [EventHandler].
@@ -46,16 +50,19 @@ func (h *DefaultEventHandler) RegisterForEvents() http.HandlerFunc {
 		claims, ok := r.Context().Value(auth.Key).(*jwt.RegisteredClaims)
 		if !ok {
 			utils.RespondWithError(w, utils.InternalServerError())
+			return
 		}
 		userId, err := strconv.Atoi(claims.Subject)
 		if err != nil {
 			utils.RespondWithError(w, utils.InternalServerError())
+			return
 		}
 
 		id := r.PathValue("id")
 		eventId, err := strconv.Atoi(id)
 		if err != nil {
 			utils.RespondWithError(w, utils.NewErrorResponse("Invalid id", http.StatusBadRequest))
+			return
 		}
 
 		errorResponse := h.eventRepository.RegisterForEvent(r.Context(), userId, eventId)
@@ -65,6 +72,34 @@ func (h *DefaultEventHandler) RegisterForEvents() http.HandlerFunc {
 		}
 
 		w.WriteHeader(http.StatusOK)
+	}
+}
+
+func (h *DefaultEventHandler) GetRegisteredEvents() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		claims, ok := r.Context().Value(auth.Key).(*jwt.RegisteredClaims)
+		if !ok {
+			utils.RespondWithError(w, utils.InternalServerError())
+			return
+		}
+		userId, err := strconv.Atoi(claims.Subject)
+		if err != nil {
+			utils.RespondWithError(w, utils.InternalServerError())
+			return
+		}
+
+		events, errorResponse := h.eventRepository.GetRegisteredEvents(r.Context(), userId)
+		if errorResponse != nil {
+			utils.RespondWithError(w, errorResponse)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+		w.WriteHeader(http.StatusOK)
+		err = json.NewEncoder(w).Encode(events)
+		if err != nil {
+			utils.RespondWithError(w, utils.InternalServerError())
+		}
 	}
 }
 
