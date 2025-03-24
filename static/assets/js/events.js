@@ -104,7 +104,10 @@ const getRegisteredEvents = async (token) => {
 
                     try {
                         const response = await fetch(`https://server-project-production-b671.up.railway.app/events/register/${event.id}`, {
-                            method: checkBox.checked ? "DELETE" : "POST"
+                            method: checkBox.checked ? "DELETE" : "POST",
+                            headers: {
+                                "Authorization": `Bearer ${token}`
+                            }
                         })
 
                         if (!response.ok) {
