@@ -20,6 +20,9 @@ type App struct {
 
 func (a *App) start() error {
 	mux := http.NewServeMux()
+
+	mux.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("static/assets"))))
+	mux.Handle("/", http.FileServer(http.Dir("static/pages")))
 	mux.Handle("POST /users/register", a.handlers.UserHandler.Register())
 	mux.Handle("POST /users/login", a.handlers.UserHandler.Login())
 	mux.Handle("GET /events", utils.EnableCors(a.handlers.EventHandle.GetEvents()))
