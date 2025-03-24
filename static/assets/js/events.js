@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const token = getCookie('token');
         const endpoint = token ? 'https://server-project-production-b671.up.railway.app/events/registered'
             : 'https://server-project-production-b671.up.railway.app/events';
+        console.log(endpoint)
 
         const headers = token ? {'Authorization': `Bearer ${token}`} : {};
 
