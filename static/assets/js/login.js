@@ -19,7 +19,8 @@ document.getElementById("login-button").addEventListener("click", async (event) 
                 const body = await response.json()
                 const token = body.token;
                 document.cookie = `token=${token}; path=/; Secure; HttpOnly; SameSite=Strict`;
-                errorText.style.display = "none"
+                alert("Успешно влизане");
+                window.location.href = "events.html"
                 break;
             default:
                 errorText.textContent = "Възникна грешка"
