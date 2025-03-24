@@ -98,9 +98,12 @@ const getRegisteredEvents = async (token) => {
                 const checkBox = document.createElement("input")
                 checkBox.type = "checkbox"
                 checkBox.checked = event.is_registered
+                const label = document.createElement("p")
                 checkBox.addEventListener("change", async () => {
+                    label.textContent = checkBox.checked ? "Не регертиран" : "Регистриран"
+
                     try {
-                        const response = await fetch(`https://server-project-production-b671.up.railway.app/events/${event.id}`, {
+                        const response = await fetch(`https://server-project-production-b671.up.railway.app/events/register/${event.id}`, {
                             method: checkBox.checked ? "POST" : "DELETE"
                         })
 
@@ -114,11 +117,7 @@ const getRegisteredEvents = async (token) => {
                     }
                 })
                 checkBoxContainer.appendChild(checkBox)
-
-                const label = document.createElement("p")
-                label.textContent = checkBox.checked ? "Не регертиран" : "Регистриран"
                 checkBoxContainer.appendChild(label)
-
                 listItem.appendChild(checkBoxContainer)
                 eventsList.appendChild(listItem)
             }
