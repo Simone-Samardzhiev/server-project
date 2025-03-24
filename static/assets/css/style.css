@@ -236,4 +236,5 @@ form button:active {
 
 .error-message {
     color: red;
+    display: none;
 }

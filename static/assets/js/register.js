@@ -87,13 +87,19 @@ document.getElementById("register-button").addEventListener("click", async (even
             body: JSON.stringify({email, password})
         })
 
-
-        if (!response.ok) {
-            errorText.textContent = "Регистрацията не бе успешна.";
-            console.error(response)
-        } else {
-            alert("Успешна регистрация!");
-            window.location.href = "login.html";
+        switch (response.status) {
+            case 200:
+                alert("Успешна регистрация!");
+                window.location.href = "login.html";
+                break;
+            case 409:
+                errorText.textContent = "Емайла вече се използва"
+                errorText.style.display = "block";
+                break
+            default:
+                errorText.textContent = "Възнинка грешка"
+                errorText.style.display = "block";
+                console.error(await response.json())
         }
     } catch (error) {
         console.error(error)
