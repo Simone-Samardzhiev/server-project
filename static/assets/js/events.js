@@ -94,36 +94,46 @@ const getRegisteredEvents = async (token) => {
                 listItem.appendChild(eventDescription)
 
 
-                const checkBoxContainer = document.createElement("div")
-                const checkBox = document.createElement("input")
-                checkBox.type = "checkbox"
-                checkBox.checked = event.is_registered
-                const label = document.createElement("p")
-                checkBox.addEventListener("change", async () => {
-                    label.textContent = checkBox.checked ? "Регистриран" : "Не регертиран"
+            const checkBoxContainer = document.createElement("div");
+            checkBoxContainer.classList.add("checkbox-container");
 
-                    try {
+            const checkBox = document.createElement("input");
+            checkBox.type = "checkbox";
+            checkBox.checked = event.is_registered;
+            checkBox.id = `event-${event.id}`;
 
-                        const response = await fetch(`https://server-project-production-b671.up.railway.app/events/register/${event.id}`, {
+            const label = document.createElement("label");
+            label.htmlFor = checkBox.id;
+            label.textContent = checkBox.checked ? "Регистриран" : "Не регистриран";
+
+            checkBox.addEventListener("change", async () => {
+                label.textContent = checkBox.checked ? "Регистриран" : "Не регистриран";
+
+                try {
+                    const response = await fetch(
+                        `https://server-project-production-b671.up.railway.app/events/register/${event.id}`,
+                        {
                             method: checkBox.checked ? "POST" : "DELETE",
                             headers: {
                                 "Authorization": `Bearer ${token}`
                             }
-                        })
-
-                        if (!response.ok) {
-                            console.error("Failed to register or unregister for event")
-                            console.error(await response.json())
-                            alert("Възникна грешка")
                         }
-                    } catch (error) {
-                        console.error("Failed to register or unregister for event")
-                        alert("Възникна грешка")
+                    );
+
+                    if (!response.ok) {
+                        console.error("Failed to register or unregister for event");
+                        console.error(await response.json());
+                        alert("Възникна грешка");
                     }
-                })
-                checkBoxContainer.appendChild(checkBox)
-                checkBoxContainer.appendChild(label)
-                listItem.appendChild(checkBoxContainer)
+                } catch (error) {
+                    console.error("Failed to register or unregister for event");
+                    alert("Възникна грешка");
+                }
+            });
+
+            checkBoxContainer.appendChild(checkBox);
+            checkBoxContainer.appendChild(label);
+            listItem.appendChild(checkBoxContainer);
                 eventsList.appendChild(listItem)
             }
         )
