@@ -90,6 +90,7 @@ document.getElementById("register-button").addEventListener("click", async (even
             body: JSON.stringify({email, password})
         })
 
+        const responseBody = JSON.parse(await response.text())
 
         switch (response.status) {
             case 200:
@@ -103,7 +104,6 @@ document.getElementById("register-button").addEventListener("click", async (even
             default:
                 errorText.textContent = "Възнинка грешка"
                 errorText.style.display = "block";
-                const responseBody = JSON.parse(await response.text())
                 console.error(responseBody)
         }
     } catch (error) {
