@@ -32,6 +32,9 @@ WORKDIR /app
 # Copy the built binary from the builder stage
 COPY --from=builder /app/bin/app /app/app
 
+# Copy the static folder into the final image
+COPY --from=builder /app/static /app/static
+
 # Expose the application port (modify if necessary)
 EXPOSE 8080
 
