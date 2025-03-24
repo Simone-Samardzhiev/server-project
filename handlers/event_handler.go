@@ -63,7 +63,7 @@ func (h *DefaultEventHandler) RegisterForEvents() http.HandlerFunc {
 		}
 
 		id := r.PathValue("id")
-		fmt.Printf("register id %s", id)
+		fmt.Println("register event ", id)
 		eventId, err := strconv.Atoi(id)
 		if err != nil {
 			utils.RespondWithError(w, utils.NewErrorResponse("Invalid id", http.StatusBadRequest))
@@ -94,7 +94,7 @@ func (h *DefaultEventHandler) UnregisterForEvents() http.HandlerFunc {
 		}
 
 		id := r.PathValue("id")
-		fmt.Printf("unregister id %s", id)
+		fmt.Println("Unregister for event", id)
 		eventId, err := strconv.Atoi(id)
 		if err != nil {
 			utils.RespondWithError(w, utils.NewErrorResponse("Invalid id", http.StatusBadRequest))
