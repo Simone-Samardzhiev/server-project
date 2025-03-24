@@ -56,10 +56,6 @@ func (h *DefaultUserHandler) Login() http.HandlerFunc {
 			return
 		}
 
-		if returned := utils.CheckPayload(w, &userPayload); returned {
-			return
-		}
-
 		token, errorResponse := h.userService.Login(r.Context(), &userPayload)
 		if errorResponse != nil {
 			utils.RespondWithError(w, errorResponse)
