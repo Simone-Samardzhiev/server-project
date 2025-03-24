@@ -91,7 +91,7 @@ document.getElementById("register-button").addEventListener("click", async (even
         })
 
         switch (response.status) {
-            case 200:
+            case 201:
                 alert("Успешна регистрация!");
                 window.location.href = "login.html";
                 break;
@@ -102,6 +102,7 @@ document.getElementById("register-button").addEventListener("click", async (even
             default:
                 errorText.textContent = "Възнинка грешка"
                 errorText.style.display = "block";
+                console.error(await response.json())
         }
     } catch (error) {
         console.error(error)
