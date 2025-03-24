@@ -93,6 +93,7 @@ const getRegisteredEvents = async (token) => {
             const checkBox = document.createElement("input")
             checkBox.type = "checkbox"
             checkBox.checked = event.is_registered
+            listItem.appendChild(checkBox)
 
             eventsList.appendChild(listItem)
         })
