@@ -109,4 +109,7 @@ document.getElementById("register-button").addEventListener("click", async (even
     } catch (error) {
         console.error(error)
     }
+
+    errorText.textContent = ""
+    errorText.style.display = "none"
 })
