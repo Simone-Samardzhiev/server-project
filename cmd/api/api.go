@@ -23,8 +23,8 @@ func (a *App) start() error {
 
 	mux.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("/app/static/assets"))))
 	mux.Handle("/", http.FileServer(http.Dir("/app/static/pages")))
-	mux.Handle("POST /users/register", a.handlers.UserHandler.Register())
-	mux.Handle("POST /users/login", a.handlers.UserHandler.Login())
+	mux.Handle("POST /users/register", utils.EnableCors(a.handlers.UserHandler.Register()))
+	mux.Handle("POST /users/login", utils.EnableCors(a.handlers.UserHandler.Login()))
 	mux.Handle("GET /events", utils.EnableCors(a.handlers.EventHandle.GetEvents()))
 	mux.Handle("POST /events/register/{id}", a.authenticator.Middleware(a.handlers.EventHandle.RegisterForEvents()))
 	mux.Handle("GET /events/registered", a.authenticator.Middleware(a.handlers.EventHandle.GetRegisteredEvents()))
