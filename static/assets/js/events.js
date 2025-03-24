@@ -94,46 +94,46 @@ const getRegisteredEvents = async (token) => {
                 listItem.appendChild(eventDescription)
 
 
-            const checkBoxContainer = document.createElement("div");
-            checkBoxContainer.classList.add("checkbox-container");
+                const checkBoxContainer = document.createElement("div");
+                checkBoxContainer.classList.add("checkbox-container");
 
-            const checkBox = document.createElement("input");
-            checkBox.type = "checkbox";
-            checkBox.checked = event.is_registered;
-            checkBox.id = `event-${event.id}`;
+                const checkBox = document.createElement("input");
+                checkBox.type = "checkbox";
+                checkBox.checked = event.is_registered;
+                checkBox.id = `event-${event.id}`;
 
-            const label = document.createElement("label");
-            label.htmlFor = checkBox.id;
-            label.textContent = checkBox.checked ? "Регистриран" : "Не регистриран";
-
-            checkBox.addEventListener("change", async () => {
+                const label = document.createElement("label");
+                label.htmlFor = checkBox.id;
                 label.textContent = checkBox.checked ? "Регистриран" : "Не регистриран";
 
-                try {
-                    const response = await fetch(
-                        `https://server-project-production-b671.up.railway.app/events/register/${event.id}`,
-                        {
-                            method: checkBox.checked ? "POST" : "DELETE",
-                            headers: {
-                                "Authorization": `Bearer ${token}`
-                            }
-                        }
-                    );
+                checkBox.addEventListener("change", async () => {
+                    label.textContent = checkBox.checked ? "Регистриран" : "Не регистриран";
 
-                    if (!response.ok) {
+                    try {
+                        const response = await fetch(
+                            `https://server-project-production-b671.up.railway.app/events/register/${event.id}`,
+                            {
+                                method: checkBox.checked ? "POST" : "DELETE",
+                                headers: {
+                                    "Authorization": `Bearer ${token}`
+                                }
+                            }
+                        );
+
+                        if (!response.ok) {
+                            console.error("Failed to register or unregister for event");
+                            console.error(await response.json());
+                            alert("Възникна грешка");
+                        }
+                    } catch (error) {
                         console.error("Failed to register or unregister for event");
-                        console.error(await response.json());
                         alert("Възникна грешка");
                     }
-                } catch (error) {
-                    console.error("Failed to register or unregister for event");
-                    alert("Възникна грешка");
-                }
-            });
+                });
 
-            checkBoxContainer.appendChild(checkBox);
-            checkBoxContainer.appendChild(label);
-            listItem.appendChild(checkBoxContainer);
+                checkBoxContainer.appendChild(checkBox);
+                checkBoxContainer.appendChild(label);
+                listItem.appendChild(checkBoxContainer);
                 eventsList.appendChild(listItem)
             }
         )
