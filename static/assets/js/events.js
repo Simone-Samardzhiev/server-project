@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const endpoint = token ? 'https://server-project-production-b671.up.railway.app/events/registered'
             : 'https://server-project-production-b671.up.railway.app/events';
 
-        const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+        const headers = token ? {'Authorization': `Bearer ${token}`} : {};
 
-        const response = await fetch(endpoint, { headers });
+        const response = await fetch(endpoint, headers);
 
         if (!response.ok) throw new Error('Грешка при зареждане на събития');
         const events = await response.json();
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const elements = {
                 title: ['h1', event.title],
-                image: ['img', null, { src: event.image_url, alt: event.title }],
+                image: ['img', null, {src: event.image_url, alt: event.title}],
                 date: ['p', `Дата: ${new Date(event.date).toLocaleDateString()}`],
                 address: ['p', `Място: ${event.address}`],
                 description: ['p', event.description]
