@@ -99,7 +99,7 @@ document.getElementById("register-button").addEventListener("click", async (even
             default:
                 errorText.textContent = "Възнинка грешка"
                 errorText.style.display = "block";
-                console.error(await response.json())
+                console.error(response.json())
         }
     } catch (error) {
         console.error(error)
