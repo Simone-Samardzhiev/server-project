@@ -57,10 +57,9 @@ nav ul li a:hover {
 }
 
 .header-div {
+    text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .header-div a {
@@ -135,7 +134,11 @@ nav ul li a:hover {
 .centered-main {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    min-height: calc(100vh - 8vh - 60px);
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .organization-info {
@@ -174,4 +177,59 @@ footer {
 
 #events-list {
     list-style: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px;
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: bold;
+}
+
+form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+form input:focus {
+    outline: 2px solid #0d5103;
+}
+
+form button {
+    background-color: #0d5103;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+form button:hover {
+    background-color: #0f6d04;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form button:active {
+    transform: translateY(0);
+    background-color: #0a3d02;
 }
