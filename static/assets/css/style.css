@@ -157,5 +157,5 @@ footer {
 }
 
 #events-list {
-    list-style-position: inside; /* Makes the numbers part of the content */
+    list-style: none;
 }

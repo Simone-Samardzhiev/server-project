@@ -1,39 +1,37 @@
-document.addEventListener('DOMContentLoaded', () => {
-    fetch("https://server-project-production-b671.up.railway.app/events")
-        .then(response => response.json())
-        .then(data => {
-            let list = document.getElementById('events-list'); // Corrected ID to 'events-list'
-            data.forEach(event => {
-                let listItem = document.createElement('li'); // Create the <li> element
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch("https://server-project-production-b671.up.railway.app/events");
+        const data = await response.json();
 
-                let eventTitle = document.createElement('h1');
-                eventTitle.innerText = event.title;
+        const list = document.getElementById('events-list');
 
-                listItem.appendChild(eventTitle);
+        data.forEach(event => {
+            const listItem = document.createElement('li');
 
-                let eventImage = document.createElement('img');
-                eventImage.src = event.image_url;
-                eventImage.alt = event.title;
+            const eventTitle = document.createElement('h1');
+            eventTitle.innerText = event.title;
+            listItem.appendChild(eventTitle);
 
-                listItem.appendChild(eventImage);
+            const eventImage = document.createElement('img');
+            eventImage.src = event.image_url;
+            eventImage.alt = event.title;
+            listItem.appendChild(eventImage);
 
-                let eventDate = document.createElement('p');
-                eventDate.innerText = `Дата: ${new Date(event.date).toLocaleDateString()}`;
+            const eventDate = document.createElement('p');
+            eventDate.innerText = `Дата: ${new Date(event.date).toLocaleDateString()}`;
+            listItem.appendChild(eventDate);
 
-                let eventAddress = document.createElement('p');
-                eventAddress.innerText = `Място: ${event.address}`;
+            const eventAddress = document.createElement('p');
+            eventAddress.innerText = `Място: ${event.address}`;
+            listItem.appendChild(eventAddress);
 
-                let eventDescription = document.createElement('p');
-                eventDescription.innerText = event.description;
+            const eventDescription = document.createElement('p');
+            eventDescription.innerText = event.description;
+            listItem.appendChild(eventDescription);
 
-                listItem.appendChild(eventDate);
-                listItem.appendChild(eventAddress);
-                listItem.appendChild(eventDescription);
-
-                list.appendChild(listItem);
-            });
-        })
-        .catch(error => {
-            console.log(error);
+            list.appendChild(listItem);
         });
+    } catch (error) {
+        console.error("Error fetching events:", error);
+    }
 });
