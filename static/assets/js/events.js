@@ -103,9 +103,9 @@ const getRegisteredEvents = async (token) => {
                     label.textContent = checkBox.checked ? "Регистриран" : "Не регертиран"
 
                     try {
-                        console.log(checkBox.checked)
+
                         const response = await fetch(`https://server-project-production-b671.up.railway.app/events/register/${event.id}`, {
-                            method: checkBox.checked ? "DELETE" : "POST",
+                            method: checkBox.checked ? "POST" : "DELETE",
                             headers: {
                                 "Authorization": `Bearer ${token}`
                             }
