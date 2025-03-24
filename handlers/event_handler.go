@@ -18,6 +18,9 @@ type EventHandler interface {
 	// RegisterForEvents will register a user for an event.
 	RegisterForEvents() http.HandlerFunc
 
+	// UnregisterForEvents will remove registration for an event.
+	UnregisterForEvents() http.HandlerFunc
+
 	// GetRegisteredEvents will return events with additional field if the user
 	// has registered for them.
 	GetRegisteredEvents() http.HandlerFunc
@@ -66,6 +69,36 @@ func (h *DefaultEventHandler) RegisterForEvents() http.HandlerFunc {
 		}
 
 		errorResponse := h.eventRepository.RegisterForEvent(r.Context(), userId, eventId)
+		if errorResponse != nil {
+			utils.RespondWithError(w, errorResponse)
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+	}
+}
+
+func (h *DefaultEventHandler) UnregisterForEvents() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		claims, ok := r.Context().Value(auth.Key).(*jwt.RegisteredClaims)
+		if !ok {
+			utils.RespondWithError(w, utils.InternalServerError())
+			return
+		}
+		userId, err := strconv.Atoi(claims.Subject)
+		if err != nil {
+			utils.RespondWithError(w, utils.InternalServerError())
+			return
+		}
+
+		id := r.PathValue("id")
+		eventId, err := strconv.Atoi(id)
+		if err != nil {
+			utils.RespondWithError(w, utils.NewErrorResponse("Invalid id", http.StatusBadRequest))
+			return
+		}
+
+		errorResponse := h.eventRepository.UnregisterForEvent(r.Context(), userId, eventId)
 		if errorResponse != nil {
 			utils.RespondWithError(w, errorResponse)
 			return

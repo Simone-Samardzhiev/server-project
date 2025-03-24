@@ -16,6 +16,9 @@ type EventService interface {
 	// RegisterForEvent will register the user for an event.
 	RegisterForEvent(ctx context.Context, userId, eventId int) *utils.ErrorResponse
 
+	// UnregisterForEvent will remove registration for an event
+	UnregisterForEvent(ctx context.Context, userId, eventId int) *utils.ErrorResponse
+
 	// GetRegisteredEvents will return all events wil additional filed if the user has registered for them.
 	GetRegisteredEvents(ctx context.Context, userId int) ([]models.EventWithRegistration, *utils.ErrorResponse)
 }
@@ -54,6 +57,18 @@ func (s *DefaultEventService) RegisterForEvent(ctx context.Context, userId, even
 	err = s.eventRepository.AddRegistration(ctx, userId, eventId)
 	if err != nil {
 		return utils.InternalServerError()
+	}
+
+	return nil
+}
+
+func (s *DefaultEventService) UnregisterForEvent(ctx context.Context, userId, eventId int) *utils.ErrorResponse {
+	result, err := s.eventRepository.DeleteRegistration(ctx, userId, eventId)
+	if err != nil {
+		return utils.InternalServerError()
+	}
+	if !result {
+		return utils.NewErrorResponse("Invalid id", http.StatusBadRequest)
 	}
 
 	return nil

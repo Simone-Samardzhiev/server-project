@@ -20,6 +20,10 @@ type EventRepository interface {
 	// AddRegistration will add a new registration to an event
 	AddRegistration(ctx context.Context, userId, eventId int) error
 
+	// DeleteRegistration will delete a registration for an event.
+	// Return true if the registration was deleted otherwise false.
+	DeleteRegistration(ctx context.Context, userId, eventId int) (bool, error)
+
 	// GetRegisteredEvents will return all events wil additional filed if the user has registered for them.
 	GetRegisteredEvents(ctx context.Context, userId int) ([]models.EventWithRegistration, error)
 }
@@ -106,6 +110,27 @@ func (r *DefaultEventRepository) AddRegistration(ctx context.Context, userId, ev
 	)
 
 	return err
+}
+
+func (r *DefaultEventRepository) DeleteRegistration(ctx context.Context, userId, eventId int) (bool, error) {
+	result, err := r.db.ExecContext(
+		ctx,
+		`DELETE FROM
+           registrations WHERE user_id = $1
+            AND event_id = $2`,
+		userId,
+		eventId,
+	)
+	if err != nil {
+		return false, err
+	}
+
+	rows, err := result.RowsAffected()
+	if err != nil {
+		return false, err
+	}
+
+	return rows > 0, nil
 }
 
 func (r *DefaultEventRepository) GetRegisteredEvents(ctx context.Context, userId int) ([]models.EventWithRegistration, error) {
