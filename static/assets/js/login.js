@@ -18,7 +18,7 @@ document.getElementById("login-button").addEventListener("click", async (event) 
             case 201:
                 const body = await response.json()
                 const token = body.token;
-                document.cookie = `token=${token}; path=/; Secure; HttpOnly; SameSite=Strict`;
+                sessionStorage.setItem("token", token)
                 alert("Успешно влизане");
                 window.location.href = "events.html"
                 break;

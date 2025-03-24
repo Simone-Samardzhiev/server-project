@@ -1,12 +1,6 @@
-const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const token = getCookie('token');
+        const token = sessionStorage.getItem("token")
         const endpoint = token ? 'https://server-project-production-b671.up.railway.app/events/registered'
             : 'https://server-project-production-b671.up.railway.app/events';
         console.log(endpoint)
