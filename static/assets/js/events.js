@@ -100,11 +100,11 @@ const getRegisteredEvents = async (token) => {
                 checkBox.checked = event.is_registered
                 const label = document.createElement("p")
                 checkBox.addEventListener("change", async () => {
-                    label.textContent = checkBox.checked ? "Не регертиран" : "Регистриран"
+                    label.textContent = checkBox.checked ? "Регистриран" : "Не регертиран"
 
                     try {
                         const response = await fetch(`https://server-project-production-b671.up.railway.app/events/register/${event.id}`, {
-                            method: checkBox.checked ? "POST" : "DELETE"
+                            method: checkBox.checked ? "DELETE" : "POST"
                         })
 
                         if (!response.ok) {
