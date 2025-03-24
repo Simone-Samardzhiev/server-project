@@ -93,13 +93,15 @@ const getRegisteredEvents = async (token) => {
                 eventDescription.innerText = event.description;
                 listItem.appendChild(eventDescription)
 
+
+                const checkBoxContainer = document.createElement("div")
                 const checkBox = document.createElement("input")
                 checkBox.type = "checkbox"
                 checkBox.checked = event.is_registered
                 checkBox.addEventListener("change", async () => {
                     try {
                         const response = await fetch(`https://server-project-production-b671.up.railway.app/events/${event.id}`, {
-                            method: checkBox.checked ? "DELETE" : "POST"
+                            method: checkBox.checked ? "POST" : "DELETE"
                         })
 
                         if (!response.ok) {
@@ -111,8 +113,13 @@ const getRegisteredEvents = async (token) => {
                         alert("Възникна грешка")
                     }
                 })
-                listItem.appendChild(checkBox)
+                checkBoxContainer.appendChild(checkBox)
 
+                const label = document.createElement("p")
+                label.textContent = checkBox.checked ? "Не регертиран" : "Регистриран"
+                checkBoxContainer.appendChild(label)
+
+                listItem.appendChild(checkBoxContainer)
                 eventsList.appendChild(listItem)
             }
         )
