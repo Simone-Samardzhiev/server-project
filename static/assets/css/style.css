@@ -1,0 +1,161 @@
+body {
+    margin: 0;
+    padding-top: 8vh;
+    background-color: rgba(189, 165, 130, 0.68);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+#logo {
+    font-family: "Brush Script MT", cursive;
+    font-size: 2rem;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #0d5103;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+    width: 100%;
+    list-style: none;
+    justify-content: space-evenly;
+    color: #ffffff;
+    padding: 0
+}
+
+nav ul li {
+    position: relative;
+    display: inline-block;
+    align-content: center;
+    cursor: pointer;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+nav ul li a:hover {
+    opacity: 0.7;
+}
+
+.dropdown-menu {
+    padding: 10px;
+    display: none;
+    position: absolute;
+    background-color: #0d5103;
+    min-width: 120px;
+    text-align: center;
+    left: 0;
+    border-radius: 0 0 10px 10px;
+}
+
+.dropdown-menu li {
+    display: block;
+    padding: 10px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.container {
+    color: black;
+    margin: 15px;
+    padding: 10px;
+}
+
+.centered-container {
+    color: black;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+}
+
+.person-info {
+    display: flex;
+    align-items: center;
+    align-content: space-between;
+    gap: 20px;
+}
+
+.person-info img {
+    max-width: 200px;
+    height: auto;
+    padding-left: 70px;
+}
+
+#about-us {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 50px;
+    align-items: start;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.centered-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.organization-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    max-width: 100ch;
+}
+
+.organization-info img {
+    max-width: 200px;
+    height: auto;
+    padding-right: 70px;
+}
+
+.volunteer-opportunity-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.volunteer-opportunity-info img {
+    max-width: 200px;
+    height: auto;
+}
+
+footer {
+    background-color: #0d5103;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+#events-list {
+    list-style-position: inside; /* Makes the numbers part of the content */
+}
