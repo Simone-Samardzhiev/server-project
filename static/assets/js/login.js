@@ -21,7 +21,7 @@ document.getElementById("login-button").addEventListener("click", async (event) 
                 window.location.href = "events.html"
                 break;
             case 401:
-                errorText.textContent = "Възникна грешка"
+                errorText.textContent = "Грешен емайл или парола"
                 errorText.style.display = "block"
                 console.error(await response.json())
                 break
