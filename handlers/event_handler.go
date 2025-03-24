@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/golang-jwt/jwt/v5"
 	"net/http"
 	"server/auth"
@@ -92,6 +93,7 @@ func (h *DefaultEventHandler) UnregisterForEvents() http.HandlerFunc {
 		}
 
 		id := r.PathValue("id")
+		fmt.Printf(id)
 		eventId, err := strconv.Atoi(id)
 		if err != nil {
 			utils.RespondWithError(w, utils.NewErrorResponse("Invalid id", http.StatusBadRequest))
