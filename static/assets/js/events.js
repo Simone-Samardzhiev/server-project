@@ -61,43 +61,63 @@ const getRegisteredEvents = async (token) => {
             }
         })
 
-        const data = await response.json()
+        if (!response.ok) {
+            console.error("Error getting events")
+            alert("Грешка при зараждането на събития")
+        }
 
+        const data = await response.json()
         const eventsList = document.getElementById("events-list")
 
         data.forEach((event) => {
-            const listItem = document.createElement("li")
+                const listItem = document.createElement("li")
 
-            const eventTitle = document.createElement("h1")
-            eventTitle.innerText = event.title;
-            listItem.appendChild(eventTitle)
+                const eventTitle = document.createElement("h1")
+                eventTitle.innerText = event.title;
+                listItem.appendChild(eventTitle)
 
-            const image = document.createElement("img")
-            image.src = event.image_url
-            image.alt = event.title
-            listItem.appendChild(image)
+                const image = document.createElement("img")
+                image.src = event.image_url
+                image.alt = event.title
+                listItem.appendChild(image)
 
-            const eventDate = document.createElement("p")
-            eventDate.innerText = `Дата: ${new Date(event.date).toLocaleDateString()}`
-            listItem.appendChild(eventDate)
+                const eventDate = document.createElement("p")
+                eventDate.innerText = `Дата: ${new Date(event.date).toLocaleDateString()}`
+                listItem.appendChild(eventDate)
 
+                const eventAddress = document.createElement("p")
+                eventAddress.innerText = event.address
+                listItem.appendChild(eventAddress)
 
-            const eventAddress = document.createElement("p")
-            eventAddress.innerText = event.address
-            listItem.appendChild(eventAddress)
+                const eventDescription = document.createElement('p');
+                eventDescription.innerText = event.description;
+                listItem.appendChild(eventDescription)
 
-            const eventDescription = document.createElement('p');
-            eventDescription.innerText = event.description;
-            listItem.appendChild(eventDescription)
+                const checkBox = document.createElement("input")
+                checkBox.type = "checkbox"
+                checkBox.checked = event.is_registered
+                checkBox.addEventListener("change", async () => {
+                    try {
+                        const response = await fetch(`https://server-project-production-b671.up.railway.app/events/${event.id}`, {
+                            method: checkBox.checked ? "DELETE" : "POST"
+                        })
 
-            const checkBox = document.createElement("input")
-            checkBox.type = "checkbox"
-            checkBox.checked = event.is_registered
-            listItem.appendChild(checkBox)
+                        if (!response.ok) {
+                            console.error("Failed to register or unregister for event")
+                            alert("Възникна грешка")
+                        }
+                    } catch (error) {
+                        console.error("Failed to register or unregister for event")
+                        alert("Възникна грешка")
+                    }
+                })
+                listItem.appendChild(checkBox)
 
-            eventsList.appendChild(listItem)
-        })
-    } catch (error) {
+                eventsList.appendChild(listItem)
+            }
+        )
+    } catch
+        (error) {
         alert("Грешка при зараждането на събития")
         console.error(error)
     }
