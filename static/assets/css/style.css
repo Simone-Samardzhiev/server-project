@@ -233,3 +233,7 @@ form button:active {
     transform: translateY(0);
     background-color: #0a3d02;
 }
+
+.error-message {
+    color: red;
+}
