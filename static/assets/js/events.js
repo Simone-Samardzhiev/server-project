@@ -112,6 +112,7 @@ const getRegisteredEvents = async (token) => {
 
                         if (!response.ok) {
                             console.error("Failed to register or unregister for event")
+                            console.error(await response.json())
                             alert("Възникна грешка")
                         }
                     } catch (error) {
