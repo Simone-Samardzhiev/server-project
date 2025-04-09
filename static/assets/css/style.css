@@ -249,7 +249,7 @@ form button:active {
 .checkbox-container input[type="checkbox"] {
     width: 20px;
     height: 20px;
-    accent-color: #0d5103; /* Green color matching the site */
+    accent-color: #0d5103;
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -262,4 +262,19 @@ form button:active {
     font-weight: bold;
     color: black;
     font-size: 16px;
+}
+
+#gallery-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+#gallery-div img {
+    max-width: 45%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
