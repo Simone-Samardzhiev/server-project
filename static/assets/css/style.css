@@ -263,3 +263,20 @@ form button:active {
     color: black;
     font-size: 16px;
 }
+
+#gallery-div {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+#gallery-div img {
+    width: 100%;
+    height: auto;
+    max-width: 500px; /* optional: set a max-width to prevent huge images */
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px; /* optional: rounded corners */
+}
