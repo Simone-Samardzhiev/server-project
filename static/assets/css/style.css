@@ -41,6 +41,7 @@ nav {
     padding: 1rem 5%;
     max-width: 1400px;
     margin: 0 auto;
+    flex-wrap: nowrap;
 }
 
 #logo {
@@ -60,6 +61,7 @@ nav {
     display: flex;
     gap: 2rem;
     list-style: none;
+    flex-wrap: nowrap;
 }
 
 .nav-item {
@@ -214,18 +216,6 @@ footer {
 
     #gallery-div {
         grid-template-columns: 1fr;
-    }
-
-    .dropdown-menu {
-        position: static;
-        opacity: 1;
-        visibility: visible;
-        box-shadow: none;
-        background: transparent;
-    }
-
-    .dropdown-item a:hover {
-        padding-left: 0;
     }
 }
 
