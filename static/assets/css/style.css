@@ -270,12 +270,12 @@ form button:active {
 
 #gallery-div {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Fix grid item overflow */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 30px;
     max-width: 1200px;
     width: 100%;
     padding: 20px;
-    margin: 0 auto; /* Ensures centering */
+    margin-left: 25%;
 }
 
 #gallery-div img {
