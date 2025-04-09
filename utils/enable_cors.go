@@ -4,7 +4,7 @@ import "net/http"
 
 func EnableCors(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "server-project-production-570f.up.railway.app")
+		w.Header().Set("Access-Control-Allow-Origin", "server-project-production-66cd.up.railway.app")
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 
