@@ -263,3 +263,7 @@ form button:active {
     color: black;
     font-size: 16px;
 }
+
+#gallery-div {
+    align-content: space-between;
+}
