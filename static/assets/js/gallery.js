@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             let el = document.createElement("img")
             el.src = image.url
             el.alt = "gallery image"
+            el.loading = "lazy"
             div.appendChild(el)
         })
 
