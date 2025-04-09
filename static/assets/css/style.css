@@ -271,6 +271,7 @@ form button:active {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    justify-items: center;
 }
 
 #gallery-div img {
