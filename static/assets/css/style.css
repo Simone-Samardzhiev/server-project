@@ -266,17 +266,17 @@ form button:active {
 
 #gallery-div {
     display: grid;
-    grid-template-columns: repeat(2, auto);
-    justify-content: center;
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    padding: 20px;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
 }
 
 #gallery-div img {
     width: 100%;
     height: auto;
-    max-width: 500px; /* optional: set a max-width to prevent huge images */
     display: block;
-    margin: 0 auto;
-    border-radius: 8px; /* optional: rounded corners */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
